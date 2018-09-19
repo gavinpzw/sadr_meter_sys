@@ -1,0 +1,3 @@
+[submodule "apk/smartammeter"]
+	path = apk/smartammeter
+	url = https://github.com/Jaykie/smartammeter
