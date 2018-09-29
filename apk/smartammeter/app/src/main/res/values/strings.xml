@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">萨德智能电表系统</string>
+    <string name="exit_title">退出应用</string>
+    <string name="exit_msg">是否真的要退出?</string>
+    <string name="exit_yes">确定</string>
+    <string name="exit_no">取消</string>
+    <string name="web_load_fail">网页加载失败，请检查网络以后再尝试！</string>
+</resources>
