@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<title>电表详情</title>
+<link href="fonts/iconfont.css" rel="stylesheet" />
+<link href="css/bass.css" rel="stylesheet" />
+<link href="css/index.css" rel="stylesheet" />
+</head>
+<style>
+.supply-header {
+	margin-top: 10px;
+}
+
+.supply li {
+	background-color: #fff;
+}
+
+.supply li {
+	position: relative;
+	padding: 0.1rem 0.3rem;
+}
+
+body {
+	background-color: #f1f1f1;
+	font-size: .8rem;
+}
+
+.title-left {
+	float: left !important;
+	padding: 3px;
+}
+
+.title-right {
+	float: right !important;
+	padding: 3px;
+	padding-bottom: 5px;
+}
+
+.li-item {
+	border-bottom: 1px solid #ebebeb !important;
+	padding-bottom: 5px;
+}
+
+p {
+	color: #1981e8;
+	margin-left: 0.3rem
+}
+</style>
+<body>
+	<div>
+		<header>
+			<div class="header">
+				<h1>电表详情</h1>
+				<a href="contact.html" class="return"><i class="icon-16"></i></a>
+			</div>
+		</header>
+		<div style="height: 2.5rem;"></div>
+	</div>
+	<!-- 供求信息管理页 supply-->
+	<div class="supply-header"></div>
+	<ul>
+		<li class="tab_content show">
+			<ul class="vconlist supply">
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">有功电能</span> <span class="title-right"
+							id="wh"></span>
+					</div>
+				</li>
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">无功电能</span> <span class="title-right"
+							id="varh"></span>
+					</div>
+				</li>
+				<li class="li-item">
+					<div class="supply-contentText">
+						频率</span> <span class="title-right" id="elec_freq"></span>
+					</div>
+				</li>
+
+
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">功率因素</span> <span class="title-right"
+							id="pf_a"></span>
+					</div>
+				</li>
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">有功功率</span> <span class="title-right"
+							id="pw_a"></span>
+					</div>
+				</li>
+				<p style="padding: 0.1rem">电压</p>
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">A相电压</span> <span class="title-right"
+							id="uv_a"></span>
+					</div>
+				</li>
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">B相电压</span> <span class="title-right"
+							id="uv_b"></span>
+					</div>
+				</li>
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">C相电压</span> <span class="title-right"
+							id="uv_c"></span>
+					</div>
+				</li>
+				<p style="padding: 0.1rem">电流</p>
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">A相电流</span> <span class="title-right"
+							id="ia_a"></span>
+					</div>
+				</li>
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">B相电流</span> <span class="title-right"
+							id="ia_b"></span>
+					</div>
+				</li>
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">C相电流</span> <span class="title-right"
+							id="ia_c"></span>
+					</div>
+				</li>
+
+				<p style="padding: 0.1rem">电压谐波总失真度</p>
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">A相电压谐波总失真度</span> <span
+							class="title-right" id="thd_u_a"></span>
+					</div>
+				</li>
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">B相电压谐波总失真度</span> <span
+							class="title-right" id="thd_u_b"></span>
+					</div>
+				</li>
+
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">C相电压谐波总失真度</span> <span
+							class="title-right" id="thd_u_c"></span>
+					</div>
+				</li>
+				<p style="padding: 0.1rem">电流谐波总失真度</p>
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">A相电流谐波总失真度</span> <span
+							class="title-right" id="thd_i_a"></span>
+					</div>
+				</li>
+
+
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">B相电流谐波总失真度</span> <span
+							class="title-right" id="thd_i_b"></span>
+					</div>
+				</li>
+
+
+
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">C相电流谐波总失真度</span> <span
+							class="title-right" id="thd_i_c"></span>
+					</div>
+				</li>
+				<p style="padding: 0.1rem">温度</p>
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">温度1</span> <span class="title-right"
+							id="temp1"></span>
+					</div>
+				</li>
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">温度2</span> <span class="title-right"
+							id="temp2"></span>
+					</div>
+				</li>
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">温度3</span> <span class="title-right"
+							id="temp3"></span>
+					</div>
+				</li>
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">温度4</span> <span class="title-right"
+							id="temp4"></span>
+					</div>
+				</li>
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">温度5</span> <span class="title-right"
+							id="temp5"></span>
+					</div>
+				</li>
+				<li class="li-item">
+					<div class="supply-contentText">
+						<span class="title-left">温度6</span> <span class="title-right"
+							id="temp6"></span>
+					</div>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<!-- 引入js资源 -->
+	<script type="text/javascript">
+		//TAB切换
+		const idMeter = getCookie('idMeter')
+		const idHub = getCookie('idHub')
+		$(document).ready(function() {
+			loadMeterData(idMeter);
+		})
+		function loadMeterData(idMeter) {
+			let html = '';
+			$.ajax({
+				url : '/sadr/company/getmetersinfo.action',
+				type : 'post',
+				dataType : "JSON",
+				contentType : 'application/json;charset=UTF-8' //关键是要加上这行
+				,
+				traditional : true//这使json格式的字符不会被转码
+				,
+				data : JSON.stringify({
+					idMeter : idMeter,
+					idHub : idHub
+				}),
+				success : function(data) {
+					const item = data.data;
+					$('#elec_freq').html(item.elecFreq)
+					$('#thd_i_a').html(item.thdIA + ' A')
+					$('#thd_u_a').html(item.thdUA)
+					$('#thd_i_b').html(item.thdIB)
+					$('#thd_u_b').html(item.thdUB)
+					$('#thd_i_c').html(item.thdIC)
+					$('#thd_u_c').html(item.thdUC)
+					$('#pw_a').html(item.pwA)
+					$('#pf_a').html(item.pfA)
+					$('#ia_a').html(item.iaA + ' A')
+					$('#uv_a').html(item.uvA + ' V')
+					$('#ia_b').html(item.iaB + ' A')
+					$('#uv_b').html(item.uvB + ' V')
+					$('#ia_c').html(item.iaC + ' A')
+					$('#uv_c').html(item.uvC + ' V')
+					$('#varh').html(item.varh)
+					$('#wh').html(item.wh + ' 度')
+					$('#temp1').html(item.temp1 / 10 + '℃')
+					$('#temp2').html(item.temp2 / 10 + '℃')
+					$('#temp3').html(item.temp3 / 10 + '℃')
+					$('#temp4').html(item.temp4 / 10 + '℃')
+					$('#temp5').html(item.temp5 / 10 + '℃')
+					$('#temp6').html(item.temp6 / 10 + '℃')
+
+				}
+			});
+		}
+
+		var tab_Btns_box = document.getElementById('tab_btn');
+		var tab_Btns = tab_Btns_box.getElementsByTagName('li');
+		var tab_contents = document.getElementsByClassName('tab_content');
+		for (var i = 0; i < tab_Btns.length; i++) {
+			tab_Btns[i].index = i;
+
+			tab_Btns[i].onclick = function() {
+				for (var i = 0; i < tab_Btns.length; i++) {
+					if (i !== this.index) {
+						tab_Btns[i].classList.remove('pick')
+					}
+				}
+				tab_Btns[this.index].className = "pick";
+
+				for (var j = 0; j < tab_contents.length; j++) {
+					if (j !== this.index) {
+						tab_contents[j].classList.remove('show');
+					}
+					tab_contents[this.index].classList.add('show');
+				}
+			}
+		}
+	</script>
+</body>
+</html>

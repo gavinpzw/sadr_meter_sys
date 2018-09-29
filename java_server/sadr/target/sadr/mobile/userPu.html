@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>个人会员中心</title>
+    <link href="fonts/iconfont.css" rel="stylesheet"/>
+    <link href="css/bass.css" rel="stylesheet"/>
+    <link href="css/index.css" rel="stylesheet"/>
+</head>
+<style>
+.user-circle {
+    padding: 0px !important; 
+}
+</style>
+<body>
+		<nav class="nav-bar nav-bar-tab">
+	    <a href="news.html" class="nav-tab-item">
+	        <span class="nav-icon icon-uniE919"></span>
+	        <span class="nav-tab-label" >消息</span>
+	    </a>
+		<a href="firmList.html" class="nav-tab-item ">
+	        <span class="nav-icon icon-uniE903"></span>
+	        <span class="nav-tab-label">机房</span>
+	    </a>
+
+		 <a href="add.html" class="nav-tab-item nav-active">
+			<div class="box nav-tab-label">
+				<span class="plus-icon"></span>
+			</div>
+	    </a>
+	    <a href="contact.html" class="nav-tab-item">
+	        <span class="nav-icon icon-uniE919"></span>
+	        <span class="nav-tab-label"  onclick="goHeader('contact.html',1000000)">设备</span>
+	    </a>
+	     <a href="userPu.html" class="nav-tab-item nav-active">
+	        <span class="nav-icon icon-uniE90B"></span>
+	        <span class="nav-tab-label">我的</span>
+	    </a>
+	</nav>
+	<!-- 个人中心 user-->
+	<div class="setBg-box"></div>
+	<div class="cy-user">
+		<div class="userPu">
+			<!-- 头像部分 -->
+			<div class="userPu-h">
+				<div class="user-h-img"><img src="images/user-img0.jpg"></div>
+				<div class="user-h-text">
+					<div class="user-name">
+				
+					</div>
+					<div class="user-association">萨德第208号员工</div>
+				</div>
+			</div>
+			<div class="user-circle">
+
+			</div>
+			<!-- 头像部分 end-->
+			<!-- 资料板块 -->
+			<div class="datum-box">
+				<ul class="datum-list">
+					<li class="dropdown">
+						<a href="firmDetails2gr.html">
+						<h1 data-toggle="dropdown" class="vtitle"><i class="ba-color ba-color2 icon-uniE953"></i><b>我的详情</b><span class="icon-uniE926"></span></h1>
+						</a>
+					</li>
+					<li class="dropdown">
+						<a href="set.html">
+							<h1 data-toggle="dropdown" class="vtitle">
+								<i class="ba-color ba-color3 icon-uniE901"></i>
+								<b>设置</b>
+								<span class="icon-uniE926"></span>
+							</h1>
+						</a>
+					</li>
+				</ul>
+				<!--<a href="validation.html" class="btn btn-max btn-green">交换名片</a>
+				<a href="javascript:;" class="btn btn-max btn-green">发送信息</a>-->
+				<!--<a href="javascript:;" class="btn btn-max btn-red">注销</a>-->
+			</div>
+			<!-- 资料板块 end-->
+		</div>
+	</div>
+	<!-- 个人中心 user end-->
+	<!-- 引用的js文件 -->
+	<script src="js/custom.js"></script>
+	<script type="text/javascript" src="js/zepto.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script language="javascript">  
+     $(document).ready(function(){
+		   var account=getCookie('account')
+		   $('.user-name').html(account)
+	 })
+
+</script>
+</body>
+</html>

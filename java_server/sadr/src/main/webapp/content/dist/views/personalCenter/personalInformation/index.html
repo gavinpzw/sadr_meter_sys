@@ -1,0 +1,191 @@
+
+<title>设置我的资料</title>
+<style>
+.layui-form-item{
+  padding-left:5%;
+  padding-right:5%;
+}
+.item-icon > .layui-icon{
+    position: absolute;
+    width: 38px;
+    line-height: 36px;
+    text-align: center;
+    color: #d2d2d2;
+	z-index:999
+	}
+	 .layui-input {
+	 padding-left: 38px;
+	}
+	.item-icon >select{
+	    padding-left: 38px;
+		}
+	.item-icon >input{
+	    padding-left: 38px;
+		}
+		.item-icon >textarea{
+	    padding-left: 38px;
+		}
+	@media(max-width:669px){//当屏幕最大669时，执行下面css
+			.layui-btn {
+			display: inline-block;
+			height: 38px;
+			width: 15%;
+		}
+	}	
+	@media(min-width:669px){//当屏幕最小669时，执行下面
+		.layui-btn {
+			display: inline-block;
+			height: 38px;
+			width: 35%;
+		}	
+	}
+		
+</style>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">设置我的资料</div>
+                <div class="layui-card-body" pad15>
+				<form class="layui-form" action="">
+				  <div class="layui-form-item">
+					<label class="layui-form-label"></label>
+					<div class="layui-input-block">
+					  <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+					</div>
+				  </div>
+				  <div class="layui-form-item">
+					<label class="layui-form-label">密码框</label>
+					<div class="layui-input-inline">
+					  <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+					</div>
+					<div class="layui-form-mid layui-word-aux">辅助文字</div>
+				  </div>
+				  <div class="layui-form-item">
+					<label class="layui-form-label">选择框</label>
+					<div class="layui-input-block">
+					  <select name="city" lay-verify="required">
+						<option value=""></option>
+						<option value="0">北京</option>
+						<option value="1">上海</option>
+						<option value="2">广州</option>
+						<option value="3">深圳</option>
+						<option value="4">杭州</option>
+					  </select>
+					</div>
+				  </div>
+
+				  <div class="layui-form-item">
+					<div class="layui-input-block">
+					  <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+					  <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					</div>
+				  </div>
+				</form> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'table', 'util'], function () {
+        var $ = layui.$
+            , admin = layui.admin
+            , table = layui.table
+            , element = layui.element;
+
+
+        var DISABLED = 'layui-btn-disabled'
+
+            //区分各选项卡中的表格
+            , tabs = {
+                all: {
+                    text: '全部消息'
+                    , id: 'LAY-app-message-all'
+                }
+                , notice: {
+                    text: '通知'
+                    , id: 'LAY-app-message-notice'
+                }
+                , direct: {
+                    text: '私信'
+                    , id: 'LAY-app-message-direct'
+                }
+            };
+
+        //标题内容模板
+        var tplTitle = function (d) {
+            return '<a lay-href="personalCenter/myMessage/detail/id=' + d.id + '">' + d.title;
+        };
+
+        //全部消息
+        table.render({
+            elem: '#LAY-app-message-all'
+            , url: 'user/listuser.action' //模拟接口
+			,method:'post'
+            , page: true
+           ,cols: [[
+                {checkbox: true, fixed: true}
+                ,{field:'id', title: '工号', sort: true}
+                ,{field:'account', title: '用户名'}
+                ,{field:'role', title: '角色', templet: '#checkboxTpl'}     
+                ,{field:'password', title: '密码'}
+            ]]
+            , skin: 'line'
+        });
+
+      
+
+        //事件处理
+        var events = {
+            del: function (othis, type) {
+                var thisTabs = tabs[type]
+                    , checkStatus = table.checkStatus(thisTabs.id)
+                    , data = checkStatus.data; //获得选中的数据
+                if (data.length === 0) return layer.msg('未选中行');
+
+                layer.confirm('确定删除选中的数据吗？', function () {
+                    /*
+                     admin.req('url', {}, function(){ //请求接口
+                     //do somethin
+                     });
+                     */
+                    //此处只是演示，实际应用需把下述代码放入上述Ajax回调中
+                    layer.msg('删除成功', {
+                        icon: 1
+                    });
+                    table.reload(thisTabs.id); //刷新表格
+                });
+            }
+            , ready: function (othis, type) {
+                var thisTabs = tabs[type]
+                    , checkStatus = table.checkStatus(thisTabs.id)
+                    , data = checkStatus.data; //获得选中的数据
+                if (data.length === 0) return layer.msg('未选中行');
+
+                //此处只是演示
+                layer.msg('标记已读成功', {
+                    icon: 1
+                });
+                table.reload(thisTabs.id); //刷新表格
+            }
+            , readyAll: function (othis, type) {
+                var thisTabs = tabs[type];
+
+                //do somethin
+
+                layer.msg(thisTabs.text + '：全部已读', {
+                    icon: 1
+                });
+            }
+        };
+
+        $('.LAY-app-message-btns .layui-btn').on('click', function () {
+            var othis = $(this)
+                , thisEvent = othis.data('events')
+                , type = othis.data('type');
+            events[thisEvent] && events[thisEvent].call(this, othis, type);
+        });
+    });
+</script>

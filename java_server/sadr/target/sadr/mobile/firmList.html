@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>机房列表</title>
+    <link href="fonts/iconfont.css" rel="stylesheet"/>
+    <link href="css/bass.css" rel="stylesheet"/>
+    <link href="css/index.css" rel="stylesheet"/>
+
+</head>
+<style>
+.firmList {
+    margin-top: -50px;
+}
+</style>
+<body>
+	<div>
+		<header>
+			<div class="header">
+				<h1>机房列表</h1>
+				<a href="index.html" class="return"><i class="icon-16"></i></a>
+			</div>
+		</header>   
+		<div style="height: 2.5rem;"></div>
+	</div>
+	<nav class="nav-bar nav-bar-tab">
+	    <a href="news.html" class="nav-tab-item">
+	        <span class="nav-icon icon-uniE919"></span>
+	        <span class="nav-tab-label" >消息</span>
+	    </a>
+		<a href="firmList.html" class="nav-tab-item nav-active">
+	        <span class="nav-icon icon-uniE903"></span>
+	        <span class="nav-tab-label">机房</span>
+	    </a>
+
+		 <a class="nav-tab-item nav-active">
+			<div class="box nav-tab-label">
+				<span class="plus-icon"></span>
+			</div>
+	    </a>
+	    <a href="contact.html" class="nav-tab-item">
+	        <span class="nav-icon icon-uniE919"></span>
+	        <span class="nav-tab-label"  onclick="goHeader('contact.html',1000000)">设备</span>
+	    </a>
+	     <a href="userPu.html" class="nav-tab-item">
+	        <span class="nav-icon icon-uniE90B"></span>
+	        <span class="nav-tab-label">我的</span>
+	    </a>
+	</nav>
+	
+	
+	
+	<!-- 企业公司列表 firmList -->
+	<div class="firmList"  id="app">
+		<ul class="firmL-U">
+		  <li v-for = "item in dataList" v-show="dataList">
+				<a href="#" v-on:click="getMeters(item.id)">
+					<img src="images/user-img0.png">
+					<div class="firm-text">
+						<h1>{{item.name}}</h1>
+						<p>详情：{{item.building}}</p>
+						<div class="firm-span">
+							<span>地址：{{item.province}}{{item.city}}{{item.district}}{{item.addrDetail}}</span>
+							<br/>
+						</div>
+					</div>
+
+				</a>
+			</li>
+		</ul>
+	</div>
+</body>
+    <!-- 引入js资源 -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript">
+	var dataList=[]
+	 var app = new Vue({
+	  el: '#app',
+	  data: {
+		dataList: {},
+	  },
+	  methods: {
+		getMeters: function (id) {
+             setCookie('roomId',id)
+			 window.location.href="contact.html" 
+		}
+	  }
+	})
+    $(document).ready(function(){
+    	$('.firmL-nav-U li span').click(function(){
+	        $(this).parent().toggleClass('active').siblings().removeClass('active');
+	    });	
+
+		$.ajax({
+		  url: '/sadr/company/geter.action'
+		 ,type:'post'
+		 ,data: {page:1, limit:500}
+		 ,success: function(data){
+			 if(data.message==='success'){
+                 app.dataList=data.data
+			 }
+			}
+		});	
+	});
+
+    </script>
+</html>

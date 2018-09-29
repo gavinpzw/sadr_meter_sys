@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>智能电表</title>
+    <link href="fonts/iconfont.css" rel="stylesheet"/>
+    <link href="css/bass.css" rel="stylesheet"/>
+    <link href="css/index.css" rel="stylesheet"/>
+</head>
+<style>
+body {
+    background-color: #f1f1f1;
+    font-size: .8rem;
+}
+.dynamic-list-head {
+    background: #fff;
+	margin-bottom:50px;
+	}
+.m-Mien>b em {
+    position: absolute;
+    width: 4px;
+    height: 1.2rem;
+    background: #f00;
+    left: 0;
+}
+</style>
+<body>
+	<div>
+		<header>
+			<div class="header">
+				<a href="index.html" class="returnA"><h1 class="htitle">萨德科技</h1></a>
+				<div class="hmap" id="gomap"></div>
+				<div class="head-input-row head-search">
+					<input id="search" type="search" placeholder="搜索信息" >
+						<span class=" head-icon-left icon-uniE90F"></span>
+						<span class=" head-icon-right icon-uniE939"></span>
+				</div>
+			</div>
+		</header>
+		<div style="height: 2.5rem;"></div>
+	</div>
+	<nav class="nav-bar nav-bar-tab">
+	    <a href="news.html" class="nav-tab-item">
+	        <span class="nav-icon icon-uniE919"></span>
+	        <span class="nav-tab-label" >消息</span>
+	    </a>
+		<a href="firmList.html" class="nav-tab-item">
+	        <span class="nav-icon icon-uniE903"></span>
+	        <span class="nav-tab-label">机房</span>
+	    </a>
+
+		 <a href="add.html" class="nav-tab-item nav-active">
+			<div class="box nav-tab-label">
+				<span class="plus-icon"></span>
+			</div>
+	    </a>
+	    <a href="contact.html" class="nav-tab-item">
+	        <span class="nav-icon icon-uniE919"></span>
+	        <span class="nav-tab-label"  onclick="goHeader('contact.html',1000000)">设备</span>
+	    </a>
+	     <a href="userPu.html" class="nav-tab-item">
+	        <span class="nav-icon icon-uniE90B"></span>
+	        <span class="nav-tab-label">我的</span>
+	    </a>
+	</nav>
+	
+	<div class="all_box">
+		<!-- 轮播图 -->
+	    <div class="m-slider" id="slider">
+		    <div class="ks_dbox ks_ts">
+		         <div class="ks_wrap">
+		           <img src="images/j-banner03.jpg">
+		         </div>
+		         <div class="ks_wrap">
+		           <img src="images/j-banner02.jpg">
+		         </div>
+		         <div class="ks_wrap">
+		           <img src="images/j-banner04.jpg">
+		         </div>
+		    </div>
+		    <div class="ks-circles"><ul class="ks_wt"></ul></div>
+	    </div>
+	    <!-- 轮播图 end-->
+	    <!-- 功能板块 -->
+	    <div class="big_button">
+
+	    	<div>
+				<div class="big_rigt_p plate_a fl">
+					<a href="#"><span class="icon-17"></span><h3>告警消息</h3></a>
+					<div class="ind-bar2"></div>
+				</div>
+				<div class="big_rigt_p plate_b fr">
+					<a href="#" onclick="goHeader('contact.html',1000000)"><span class="icon--01"></span><h3>电表</h3></a>
+					<div class="ind-bar3"></div>
+				</div>
+				<div class="big_rigt_p plate_c fl">
+					<a href="firmList.html"><span class="icon-uniE932"></span><h3>机房</h3></a>
+					<div class="ind-bar2"></div>
+				</div>
+				<div class="big_rigt_p plate_d fr" >
+					<a href="#"><span class="icon-uniE93B"></span><h3>敬请期待</h3></a>
+					<div class="ind-bar3"></div>
+				</div>
+			</div>
+	    </div>
+
+	</div>
+	<div class="m-Mien">
+		<b><em></em>警告</b>
+		<ul>
+			<li>
+				<a href="#" class="cl">
+					<img src="images/user-img0.jpg">
+					<div class="mienIntro">
+						<h1>敬请期待</h1>
+						<p>待开放1</p>
+					</div>
+				</a>
+			</li>
+		</ul>
+
+	</div>
+	
+	<div class="dynamic-list activity-list">
+			<div class="dynamic-list-head">
+				<i class="dynamic-i-l icon-uniE93D"></i>
+				<b>其他消息</b>
+				<a href="activityList.html"><i class="dynamic-i-r icon-uniE906 fr"></i></a>
+			</div>
+			<ul class="eventreminder">
+				<li>  		
+		    		<a href="activity.html">
+		    			<div class="A-cimg">
+		    			</div>
+	                    <div class="eventreminder-list">
+	                    </div>  
+					</a>
+				</li>  
+
+	        </ul>
+		</div>
+    <!-- 协会动态列表 end-->
+    <!-- 引入js资源 -->
+	<script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+  	<script type="text/javascript" src="js/zepto.kslider.js"></script>
+    <script type="text/javascript">
+	  $(function(){
+	     //slider
+	      $('#slider').slider({
+	        className: 'slider_box',
+	        tick: 4000 //播放间隔
+	     });
+	     var imgPieces=$('.m-slider').find('.ks_wrap');
+	     for(var i=0;i<imgPieces.length;i++){
+	       $('.ks_wt').append('<li></li>');
+	       $('.ks_wt').find('li').eq(0).addClass('active');
+	     }
+	  });
+	</script> 
+</body>
+</html>

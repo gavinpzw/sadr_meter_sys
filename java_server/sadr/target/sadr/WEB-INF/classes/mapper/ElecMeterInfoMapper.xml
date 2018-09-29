@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sadr.dao.ElecMeterInfoMapper">
+  <resultMap id="BaseResultMap" type="com.sadr.domain.ElecMeterInfo">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="unique_id" jdbcType="INTEGER" property="uniqueId" />
+    <result column="wh" jdbcType="INTEGER" property="wh" />
+    <result column="varh" jdbcType="INTEGER" property="varh" />
+    <result column="elec_freq" jdbcType="INTEGER" property="elecFreq" />
+    <result column="uv_a" jdbcType="INTEGER" property="uvA" />
+    <result column="uv_b" jdbcType="INTEGER" property="uvB" />
+    <result column="uv_c" jdbcType="INTEGER" property="uvC" />
+    <result column="ia_a" jdbcType="INTEGER" property="iaA" />
+    <result column="ia_b" jdbcType="INTEGER" property="iaB" />
+    <result column="ia_c" jdbcType="INTEGER" property="iaC" />
+    <result column="pf_a" jdbcType="INTEGER" property="pfA" />
+    <result column="pf_b" jdbcType="INTEGER" property="pfB" />
+    <result column="pf_c" jdbcType="INTEGER" property="pfC" />
+    <result column="pw_a" jdbcType="INTEGER" property="pwA" />
+    <result column="pw_b" jdbcType="INTEGER" property="pwB" />
+    <result column="pw_c" jdbcType="INTEGER" property="pwC" />
+    <result column="thd_u_a" jdbcType="INTEGER" property="thdUA" />
+    <result column="thd_u_b" jdbcType="INTEGER" property="thdUB" />
+    <result column="thd_u_c" jdbcType="INTEGER" property="thdUC" />
+    <result column="thd_i_a" jdbcType="INTEGER" property="thdIA" />
+    <result column="thd_i_b" jdbcType="INTEGER" property="thdIB" />
+    <result column="thd_i_c" jdbcType="INTEGER" property="thdIC" />
+    <result column="temp_1" jdbcType="INTEGER" property="temp1" />
+    <result column="temp_2" jdbcType="INTEGER" property="temp2" />
+    <result column="temp_3" jdbcType="INTEGER" property="temp3" />
+    <result column="temp_4" jdbcType="INTEGER" property="temp4" />
+    <result column="temp_5" jdbcType="INTEGER" property="temp5" />
+    <result column="temp_6" jdbcType="INTEGER" property="temp6" />
+ 
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, create_time, unique_id, wh, varh, elec_freq, uv_a, uv_b, uv_c, ia_a, ia_b, ia_c, 
+    pf_a, pf_b, pf_c, pw_a, pw_b, pw_c, thd_u_a, thd_u_b, thd_u_c, thd_i_a, thd_i_b, 
+    thd_i_c
+  </sql>
+  <select id="selectByExample" parameterType="com.sadr.domain.ElecMeterInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from elec_meter_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from elec_meter_info
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from elec_meter_info
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sadr.domain.ElecMeterInfoExample">
+    delete from elec_meter_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sadr.domain.ElecMeterInfo">
+    insert into elec_meter_info (ID, create_time, unique_id, 
+      wh, varh, elec_freq, 
+      uv_a, uv_b, uv_c, ia_a, 
+      ia_b, ia_c, pf_a, pf_b, 
+      pf_c, pw_a, pw_b, pw_c, 
+      thd_u_a, thd_u_b, thd_u_c, 
+      thd_i_a, thd_i_b, thd_i_c
+      )
+    values (#{id,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{uniqueId,jdbcType=INTEGER}, 
+      #{wh,jdbcType=INTEGER}, #{varh,jdbcType=INTEGER}, #{elecFreq,jdbcType=INTEGER}, 
+      #{uvA,jdbcType=INTEGER}, #{uvB,jdbcType=INTEGER}, #{uvC,jdbcType=INTEGER}, #{iaA,jdbcType=INTEGER}, 
+      #{iaB,jdbcType=INTEGER}, #{iaC,jdbcType=INTEGER}, #{pfA,jdbcType=INTEGER}, #{pfB,jdbcType=INTEGER}, 
+      #{pfC,jdbcType=INTEGER}, #{pwA,jdbcType=INTEGER}, #{pwB,jdbcType=INTEGER}, #{pwC,jdbcType=INTEGER}, 
+      #{thdUA,jdbcType=INTEGER}, #{thdUB,jdbcType=INTEGER}, #{thdUC,jdbcType=INTEGER}, 
+      #{thdIA,jdbcType=INTEGER}, #{thdIB,jdbcType=INTEGER}, #{thdIC,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sadr.domain.ElecMeterInfo">
+    insert into elec_meter_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="uniqueId != null">
+        unique_id,
+      </if>
+      <if test="wh != null">
+        wh,
+      </if>
+      <if test="varh != null">
+        varh,
+      </if>
+      <if test="elecFreq != null">
+        elec_freq,
+      </if>
+      <if test="uvA != null">
+        uv_a,
+      </if>
+      <if test="uvB != null">
+        uv_b,
+      </if>
+      <if test="uvC != null">
+        uv_c,
+      </if>
+      <if test="iaA != null">
+        ia_a,
+      </if>
+      <if test="iaB != null">
+        ia_b,
+      </if>
+      <if test="iaC != null">
+        ia_c,
+      </if>
+      <if test="pfA != null">
+        pf_a,
+      </if>
+      <if test="pfB != null">
+        pf_b,
+      </if>
+      <if test="pfC != null">
+        pf_c,
+      </if>
+      <if test="pwA != null">
+        pw_a,
+      </if>
+      <if test="pwB != null">
+        pw_b,
+      </if>
+      <if test="pwC != null">
+        pw_c,
+      </if>
+      <if test="thdUA != null">
+        thd_u_a,
+      </if>
+      <if test="thdUB != null">
+        thd_u_b,
+      </if>
+      <if test="thdUC != null">
+        thd_u_c,
+      </if>
+      <if test="thdIA != null">
+        thd_i_a,
+      </if>
+      <if test="thdIB != null">
+        thd_i_b,
+      </if>
+      <if test="thdIC != null">
+        thd_i_c,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uniqueId != null">
+        #{uniqueId,jdbcType=INTEGER},
+      </if>
+      <if test="wh != null">
+        #{wh,jdbcType=INTEGER},
+      </if>
+      <if test="varh != null">
+        #{varh,jdbcType=INTEGER},
+      </if>
+      <if test="elecFreq != null">
+        #{elecFreq,jdbcType=INTEGER},
+      </if>
+      <if test="uvA != null">
+        #{uvA,jdbcType=INTEGER},
+      </if>
+      <if test="uvB != null">
+        #{uvB,jdbcType=INTEGER},
+      </if>
+      <if test="uvC != null">
+        #{uvC,jdbcType=INTEGER},
+      </if>
+      <if test="iaA != null">
+        #{iaA,jdbcType=INTEGER},
+      </if>
+      <if test="iaB != null">
+        #{iaB,jdbcType=INTEGER},
+      </if>
+      <if test="iaC != null">
+        #{iaC,jdbcType=INTEGER},
+      </if>
+      <if test="pfA != null">
+        #{pfA,jdbcType=INTEGER},
+      </if>
+      <if test="pfB != null">
+        #{pfB,jdbcType=INTEGER},
+      </if>
+      <if test="pfC != null">
+        #{pfC,jdbcType=INTEGER},
+      </if>
+      <if test="pwA != null">
+        #{pwA,jdbcType=INTEGER},
+      </if>
+      <if test="pwB != null">
+        #{pwB,jdbcType=INTEGER},
+      </if>
+      <if test="pwC != null">
+        #{pwC,jdbcType=INTEGER},
+      </if>
+      <if test="thdUA != null">
+        #{thdUA,jdbcType=INTEGER},
+      </if>
+      <if test="thdUB != null">
+        #{thdUB,jdbcType=INTEGER},
+      </if>
+      <if test="thdUC != null">
+        #{thdUC,jdbcType=INTEGER},
+      </if>
+      <if test="thdIA != null">
+        #{thdIA,jdbcType=INTEGER},
+      </if>
+      <if test="thdIB != null">
+        #{thdIB,jdbcType=INTEGER},
+      </if>
+      <if test="thdIC != null">
+        #{thdIC,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sadr.domain.ElecMeterInfoExample" resultType="java.lang.Long">
+    select count(*) from elec_meter_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update elec_meter_info
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.uniqueId != null">
+        unique_id = #{record.uniqueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.wh != null">
+        wh = #{record.wh,jdbcType=INTEGER},
+      </if>
+      <if test="record.varh != null">
+        varh = #{record.varh,jdbcType=INTEGER},
+      </if>
+      <if test="record.elecFreq != null">
+        elec_freq = #{record.elecFreq,jdbcType=INTEGER},
+      </if>
+      <if test="record.uvA != null">
+        uv_a = #{record.uvA,jdbcType=INTEGER},
+      </if>
+      <if test="record.uvB != null">
+        uv_b = #{record.uvB,jdbcType=INTEGER},
+      </if>
+      <if test="record.uvC != null">
+        uv_c = #{record.uvC,jdbcType=INTEGER},
+      </if>
+      <if test="record.iaA != null">
+        ia_a = #{record.iaA,jdbcType=INTEGER},
+      </if>
+      <if test="record.iaB != null">
+        ia_b = #{record.iaB,jdbcType=INTEGER},
+      </if>
+      <if test="record.iaC != null">
+        ia_c = #{record.iaC,jdbcType=INTEGER},
+      </if>
+      <if test="record.pfA != null">
+        pf_a = #{record.pfA,jdbcType=INTEGER},
+      </if>
+      <if test="record.pfB != null">
+        pf_b = #{record.pfB,jdbcType=INTEGER},
+      </if>
+      <if test="record.pfC != null">
+        pf_c = #{record.pfC,jdbcType=INTEGER},
+      </if>
+      <if test="record.pwA != null">
+        pw_a = #{record.pwA,jdbcType=INTEGER},
+      </if>
+      <if test="record.pwB != null">
+        pw_b = #{record.pwB,jdbcType=INTEGER},
+      </if>
+      <if test="record.pwC != null">
+        pw_c = #{record.pwC,jdbcType=INTEGER},
+      </if>
+      <if test="record.thdUA != null">
+        thd_u_a = #{record.thdUA,jdbcType=INTEGER},
+      </if>
+      <if test="record.thdUB != null">
+        thd_u_b = #{record.thdUB,jdbcType=INTEGER},
+      </if>
+      <if test="record.thdUC != null">
+        thd_u_c = #{record.thdUC,jdbcType=INTEGER},
+      </if>
+      <if test="record.thdIA != null">
+        thd_i_a = #{record.thdIA,jdbcType=INTEGER},
+      </if>
+      <if test="record.thdIB != null">
+        thd_i_b = #{record.thdIB,jdbcType=INTEGER},
+      </if>
+      <if test="record.thdIC != null">
+        thd_i_c = #{record.thdIC,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update elec_meter_info
+    set ID = #{record.id,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      unique_id = #{record.uniqueId,jdbcType=INTEGER},
+      wh = #{record.wh,jdbcType=INTEGER},
+      varh = #{record.varh,jdbcType=INTEGER},
+      elec_freq = #{record.elecFreq,jdbcType=INTEGER},
+      uv_a = #{record.uvA,jdbcType=INTEGER},
+      uv_b = #{record.uvB,jdbcType=INTEGER},
+      uv_c = #{record.uvC,jdbcType=INTEGER},
+      ia_a = #{record.iaA,jdbcType=INTEGER},
+      ia_b = #{record.iaB,jdbcType=INTEGER},
+      ia_c = #{record.iaC,jdbcType=INTEGER},
+      pf_a = #{record.pfA,jdbcType=INTEGER},
+      pf_b = #{record.pfB,jdbcType=INTEGER},
+      pf_c = #{record.pfC,jdbcType=INTEGER},
+      pw_a = #{record.pwA,jdbcType=INTEGER},
+      pw_b = #{record.pwB,jdbcType=INTEGER},
+      pw_c = #{record.pwC,jdbcType=INTEGER},
+      thd_u_a = #{record.thdUA,jdbcType=INTEGER},
+      thd_u_b = #{record.thdUB,jdbcType=INTEGER},
+      thd_u_c = #{record.thdUC,jdbcType=INTEGER},
+      thd_i_a = #{record.thdIA,jdbcType=INTEGER},
+      thd_i_b = #{record.thdIB,jdbcType=INTEGER},
+      thd_i_c = #{record.thdIC,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sadr.domain.ElecMeterInfo">
+    update elec_meter_info
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uniqueId != null">
+        unique_id = #{uniqueId,jdbcType=INTEGER},
+      </if>
+      <if test="wh != null">
+        wh = #{wh,jdbcType=INTEGER},
+      </if>
+      <if test="varh != null">
+        varh = #{varh,jdbcType=INTEGER},
+      </if>
+      <if test="elecFreq != null">
+        elec_freq = #{elecFreq,jdbcType=INTEGER},
+      </if>
+      <if test="uvA != null">
+        uv_a = #{uvA,jdbcType=INTEGER},
+      </if>
+      <if test="uvB != null">
+        uv_b = #{uvB,jdbcType=INTEGER},
+      </if>
+      <if test="uvC != null">
+        uv_c = #{uvC,jdbcType=INTEGER},
+      </if>
+      <if test="iaA != null">
+        ia_a = #{iaA,jdbcType=INTEGER},
+      </if>
+      <if test="iaB != null">
+        ia_b = #{iaB,jdbcType=INTEGER},
+      </if>
+      <if test="iaC != null">
+        ia_c = #{iaC,jdbcType=INTEGER},
+      </if>
+      <if test="pfA != null">
+        pf_a = #{pfA,jdbcType=INTEGER},
+      </if>
+      <if test="pfB != null">
+        pf_b = #{pfB,jdbcType=INTEGER},
+      </if>
+      <if test="pfC != null">
+        pf_c = #{pfC,jdbcType=INTEGER},
+      </if>
+      <if test="pwA != null">
+        pw_a = #{pwA,jdbcType=INTEGER},
+      </if>
+      <if test="pwB != null">
+        pw_b = #{pwB,jdbcType=INTEGER},
+      </if>
+      <if test="pwC != null">
+        pw_c = #{pwC,jdbcType=INTEGER},
+      </if>
+      <if test="thdUA != null">
+        thd_u_a = #{thdUA,jdbcType=INTEGER},
+      </if>
+      <if test="thdUB != null">
+        thd_u_b = #{thdUB,jdbcType=INTEGER},
+      </if>
+      <if test="thdUC != null">
+        thd_u_c = #{thdUC,jdbcType=INTEGER},
+      </if>
+      <if test="thdIA != null">
+        thd_i_a = #{thdIA,jdbcType=INTEGER},
+      </if>
+      <if test="thdIB != null">
+        thd_i_b = #{thdIB,jdbcType=INTEGER},
+      </if>
+      <if test="thdIC != null">
+        thd_i_c = #{thdIC,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sadr.domain.ElecMeterInfo">
+    update elec_meter_info
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      unique_id = #{uniqueId,jdbcType=INTEGER},
+      wh = #{wh,jdbcType=INTEGER},
+      varh = #{varh,jdbcType=INTEGER},
+      elec_freq = #{elecFreq,jdbcType=INTEGER},
+      uv_a = #{uvA,jdbcType=INTEGER},
+      uv_b = #{uvB,jdbcType=INTEGER},
+      uv_c = #{uvC,jdbcType=INTEGER},
+      ia_a = #{iaA,jdbcType=INTEGER},
+      ia_b = #{iaB,jdbcType=INTEGER},
+      ia_c = #{iaC,jdbcType=INTEGER},
+      pf_a = #{pfA,jdbcType=INTEGER},
+      pf_b = #{pfB,jdbcType=INTEGER},
+      pf_c = #{pfC,jdbcType=INTEGER},
+      pw_a = #{pwA,jdbcType=INTEGER},
+      pw_b = #{pwB,jdbcType=INTEGER},
+      pw_c = #{pwC,jdbcType=INTEGER},
+      thd_u_a = #{thdUA,jdbcType=INTEGER},
+      thd_u_b = #{thdUB,jdbcType=INTEGER},
+      thd_u_c = #{thdUC,jdbcType=INTEGER},
+      thd_i_a = #{thdIA,jdbcType=INTEGER},
+      thd_i_b = #{thdIB,jdbcType=INTEGER},
+      thd_i_c = #{thdIC,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <!-- ElecMeterInfo selectByUniqueId(Integer id); -->
+   <select id="selectByUniqueId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from elec_meter_info where unique_id = #{uniqueId} order by create_time desc LIMIT 1
+  </select>
+</mapper>

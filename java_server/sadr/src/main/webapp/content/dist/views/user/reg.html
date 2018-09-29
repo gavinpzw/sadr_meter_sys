@@ -1,0 +1,195 @@
+
+<script type="text/html" template>
+    <link rel="stylesheet" href="{{ layui.setter.base }}style/login.css?v={{ layui.admin.v }}-1" media="all">
+</script>
+<style>
+.center{
+    text-align: center;
+	margin-left:0px !important;
+	}
+</style>
+
+<div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
+    <div class="layadmin-user-login-main">
+        <div class="layadmin-user-login-box layadmin-user-login-header">
+            <h2>智能电表云平台</h2>
+            <p>智能电表云平台技术团队开发</p>
+        </div>
+        <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+		    <div class="layui-form-item ">
+				<div class="layui-input-block center role">
+				  <input type="radio" name="role"  lay-filter="role" class="role-item"  value="2" title="安装人员" >
+				  <input type="radio" name="role"  lay-filter="role" class="role-item"  value="3" title="客户" checked="">
+				</div>
+            </div>
+			<div class="layui-form-item companyId">
+			   <label class="layadmin-user-login-icon layui-icon layui-icon-username" ></label>
+			  <select name="companyId"  lay-search="" id="companyId">
+				  <option value="">请填写公司名称</option>
+			   </select>
+			   
+			</div>
+		    <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-account"></label>
+                <input type="text" name="account" id="LAY-user-login-account" lay-verify="account" placeholder="用户名" class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
+                <input type="password" name="password" id="LAY-user-login-password"  placeholder="密码" class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="repassword"></label>
+                <input type="password" name="repassword" id="repassword"  placeholder="确认密码" class="layui-input">
+            </div>
+			
+            <div class="layui-form-item">
+                <input type="checkbox" name="agreement" lay-skin="primary"  title="同意用户协议" checked>
+            </div>
+            <div class="layui-form-item">
+                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-reg-submit" id="btn">注 册</button>
+            </div>
+            <div class="layui-trans layui-form-item layadmin-user-login-other">
+                <a lay-href="/user/login" class="layadmin-user-jump-change layadmin-link layui-hide-xs">用已有帐号登入</a>
+                <a lay-href="/user/login" class="layadmin-user-jump-change layadmin-link layui-hide-sm layui-show-xs-inline-block">登入</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-trans layadmin-user-login-footer">
+
+        <p>© 2018 <a href="#" target="_blank">智能云</a></p>
+
+    </div>
+
+</div>
+
+<script>
+    layui.use(['admin', 'form', 'user','jquery'], function(){
+        var $ = layui.$ 
+            ,setter = layui.setter
+            ,admin = layui.admin
+            ,form = layui.form
+			,$=layui.jquery
+            ,router = layui.router();
+			
+          //请求接口
+        form.render();
+		var parms = {
+			company : '有限' //这是个数组
+		};
+		// 初次加载初始化select内容
+        admin.req({
+			url: 'user/getCompany.action' //实际使用请改成服务端真实接口
+			,type:"post"
+			,dataType: "JSON"
+			,contentType:'application/json;charset=UTF-8'//关键是要加上这行
+			,traditional:true//这使json格式的字符不会被转码
+			,done: function(res){
+			  $(".layui-anim-upbit").html('');
+			　　for(var i in res.data) {
+　　　				　$("#companyId").append('<option value="'+res.data[i]['id']+'">'+res.data[i]['name']+'</option>');
+　　				}  
+				form.render("select");         
+			}
+        });
+	
+				 //自定义验证规则
+		form.verify({
+			account: function(value){
+					 //请求接口
+				 var parms = {
+					account : value //这是个数组
+				};
+				var flag=false;
+				admin.req({
+					url: 'user/checkUser.action' //实际使用请改成服务端真实接口
+					,type:"post"
+					,dataType: "JSON"
+					,async:false
+					,contentType:'application/json;charset=UTF-8'//关键是要加上这行
+					,traditional:true//这使json格式的字符不会被转码
+					,data: JSON.stringify(parms)
+					,done: function(res){
+						if(res.message !=="success"){
+				           flag=false;
+						}else{
+						    flag=true;
+						}
+					}
+				});
+				if(!flag)
+					return '用户名已经注册过了';
+			}
+			,pass: [/(.+){6,12}$/, '密码必须6到12位']
+			,content: function(value){
+			  layedit.sync(editIndex);
+			}
+		 });
+		form.on('radio(role)', function (data) {
+			if(data.value !=='3'){
+			   $('.companyId').hide();
+			}else{
+			  $('.companyId').show();
+			}
+        });     
+        //提交
+        form.on('submit(LAY-user-reg-submit)', function(obj){
+            var field = obj.field;
+			if(field.role==='3'){
+				 if(field.companyId ===''){
+					return layer.msg('公司名称必填');
+				}
+			}else{
+				field.companyId='';
+			}
+			if(field.account ===''){
+                return layer.msg('用户名必填');
+            }
+			
+			 if(field.password ===''){
+                return layer.msg('密码必填');
+            }
+
+            //确认密码
+            if(field.password !== field.repassword){
+                return layer.msg('两次密码输入不一致');
+            }
+		
+
+            //是否同意用户协议
+            if(!field.agreement){
+                return layer.msg('你必须同意用户协议才能注册');
+            }
+            //请求接口
+			var formParam = {
+				companyId : field.companyId //这是个数组
+				,account : field.account //这是个数组
+				,password : field.password //这是个数组
+				,role : field.role //这是个数组
+			};
+            admin.req({
+                url: 'user/register.action' //实际使用请改成服务端真实接口
+                ,type:"post"
+				,dataType: "JSON"
+				,contentType:'application/json;charset=UTF-8'//关键是要加上这行
+				,traditional:true//这使json格式的字符不会被转码
+				,data: JSON.stringify(formParam)
+                ,done: function(res){
+					if(res.message =="success"){
+						layer.msg('注册成功', {
+							offset: '15px'
+							,icon: 1
+							,time: 1000
+						}, function(){
+						    location.hash = '/user/login'; //跳转到登入页
+						});
+					}else{
+					  layer.msg('注册失败，服务器异常！');
+					}
+				}
+            });
+
+            return false;
+        });
+    });
+</script>

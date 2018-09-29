@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sadr.dao.MenuMapper">
+	<resultMap id="BaseResultMap" type="com.sadr.domain.Menu">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="big_name" jdbcType="VARCHAR" property="bigName" />
+		<result column="big_title" jdbcType="VARCHAR" property="bigTitle" />
+		<result column="icon" jdbcType="VARCHAR" property="icon" />
+		<result column="small_title" jdbcType="VARCHAR" property="smallTitle" />
+		<result column="small_name" jdbcType="VARCHAR" property="smallName" />
+		<result column="jump" jdbcType="VARCHAR" property="jump" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, big_name, big_title, icon, small_title, small_name,
+		jump
+	</sql>
+	<select id="selectByExample" parameterType="com.sadr.domain.MenuExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from menu
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from menu
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from menu
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.sadr.domain.MenuExample">
+		delete from menu
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.sadr.domain.Menu">
+		insert into menu (id,
+		big_name, big_title,
+		icon, small_title, small_name,
+		jump)
+		values
+		(#{id,jdbcType=INTEGER}, #{bigName,jdbcType=VARCHAR},
+		#{bigTitle,jdbcType=VARCHAR},
+		#{icon,jdbcType=VARCHAR},
+		#{smallTitle,jdbcType=VARCHAR}, #{smallName,jdbcType=VARCHAR},
+		#{jump,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.sadr.domain.Menu">
+		insert into menu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="bigName != null">
+				big_name,
+			</if>
+			<if test="bigTitle != null">
+				big_title,
+			</if>
+			<if test="icon != null">
+				icon,
+			</if>
+			<if test="smallTitle != null">
+				small_title,
+			</if>
+			<if test="smallName != null">
+				small_name,
+			</if>
+			<if test="jump != null">
+				jump,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="bigName != null">
+				#{bigName,jdbcType=VARCHAR},
+			</if>
+			<if test="bigTitle != null">
+				#{bigTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null">
+				#{icon,jdbcType=VARCHAR},
+			</if>
+			<if test="smallTitle != null">
+				#{smallTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="smallName != null">
+				#{smallName,jdbcType=VARCHAR},
+			</if>
+			<if test="jump != null">
+				#{jump,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.sadr.domain.MenuExample"
+		resultType="java.lang.Long">
+		select count(*) from menu
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update menu
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=INTEGER},
+			</if>
+			<if test="record.bigName != null">
+				big_name = #{record.bigName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.bigTitle != null">
+				big_title = #{record.bigTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="record.icon != null">
+				icon = #{record.icon,jdbcType=VARCHAR},
+			</if>
+			<if test="record.smallTitle != null">
+				small_title = #{record.smallTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="record.smallName != null">
+				small_name = #{record.smallName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.jump != null">
+				jump = #{record.jump,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update menu
+		set id = #{record.id,jdbcType=INTEGER},
+		big_name =
+		#{record.bigName,jdbcType=VARCHAR},
+		big_title =
+		#{record.bigTitle,jdbcType=VARCHAR},
+		icon =
+		#{record.icon,jdbcType=VARCHAR},
+		small_title =
+		#{record.smallTitle,jdbcType=VARCHAR},
+		small_name =
+		#{record.smallName,jdbcType=VARCHAR},
+		jump =
+		#{record.jump,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.sadr.domain.Menu">
+		update menu
+		<set>
+			<if test="bigName != null">
+				big_name = #{bigName,jdbcType=VARCHAR},
+			</if>
+			<if test="bigTitle != null">
+				big_title = #{bigTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null">
+				icon = #{icon,jdbcType=VARCHAR},
+			</if>
+			<if test="smallTitle != null">
+				small_title = #{smallTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="smallName != null">
+				small_name = #{smallName,jdbcType=VARCHAR},
+			</if>
+			<if test="jump != null">
+				jump = #{jump,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.sadr.domain.Menu">
+		update menu
+		set
+		big_name = #{bigName,jdbcType=VARCHAR},
+		big_title =
+		#{bigTitle,jdbcType=VARCHAR},
+		icon = #{icon,jdbcType=VARCHAR},
+		small_title = #{smallTitle,jdbcType=VARCHAR},
+		small_name =
+		#{smallName,jdbcType=VARCHAR},
+		jump = #{jump,jdbcType=VARCHAR}
+		where id
+		= #{id,jdbcType=INTEGER}
+	</update>
+
+
+	<resultMap id="MuneResultMap" type="com.sadr.domain.MenuDo">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="big_name" jdbcType="VARCHAR" property="bigName" />
+		<result column="big_title" jdbcType="VARCHAR" property="bigTitle" />
+		<result column="icon" jdbcType="VARCHAR" property="icon" />
+		<collection property="list" ofType="com.sadr.domain.MenuSmall">
+			<result column="small_title" jdbcType="VARCHAR" property="smallTitle" />
+			<result column="small_name" jdbcType="VARCHAR" property="smallName" />
+			<result column="jump" jdbcType="VARCHAR" property="jump" />
+		</collection>
+	</resultMap>
+	<!-- List<Menu> selectByCompanysId(Integer companyId); -->
+	<select id="getmenu" parameterType="java.lang.Integer"
+		resultMap="MuneResultMap">
+		SELECT m.* FROM menu m,menu_role r WHERE m.id = r.menu_id
+		AND r.role_id =
+		#{companyId}
+	</select>
+</mapper>

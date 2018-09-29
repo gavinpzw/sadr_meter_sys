@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>电表列表</title>
+    <link href="fonts/iconfont.css" rel="stylesheet"/>
+    <link href="css/bass.css" rel="stylesheet"/>
+    <link href="css/index.css" rel="stylesheet"/>
+</head>
+<style>
+.supply li {
+    background: #fff;
+	}
+body {
+    background-color: #f1f1f1;
+    font-size: .8rem;
+}
+.noMsg{
+  text-align:center;
+}
+.commentUser{
+height:60px !important;
+}
+img {
+    width: 75% !important;
+    padding: 5px 10px;
+}
+
+       .right {
+			width: 20px;
+			height: 20px;
+			position: absolute;
+			/* left: 0; */
+			right: 10px;
+			top: 0;
+			border: 0px solid #1981e8;
+		}
+        .right-arrow1,.right-arrow2{
+            width:0;
+            height:0;
+            display:block;
+            position:absolute;
+            left:0;
+            top: 23px;
+            border-top:10px transparent dashed;
+            border-right:10px transparent dashed;
+            border-bottom:10px transparent dashed;
+            border-left:10px white solid;
+            overflow:hidden;
+        }
+       .right-arrow1 {
+			left: 4px;
+			border-left: 10px #e3e3e3 solid;
+		}
+        .right-arrow2{
+            border-left:10px white solid;
+        }
+</style>
+<body>
+	<div>
+        <header>
+            <div class="header">
+                <h1>电表列表</h1>
+                <a href="index.html" class="return"><i class="icon-16"></i></a>
+            </div>
+        </header>   
+        <div style="height: 2.5rem;"></div>
+    </div>
+	<!-- 供求信息管理页 supply-->
+
+       
+
+	<div class="supply-header">
+		<div class="contact-search">
+        	<i class="icon-uniE90F"></i>
+        	<input type="search"  id ="search" placeholder="请输入ID">
+         </div>
+		<ul id="tab_btn" class="supply-tab">
+		</ul>
+	</div>
+	<ul  class="content">
+		<li class="tab_content show">
+			<ul class="vconlist supply" id="content">
+
+			</ul>
+			<p class="noMsg">没有更多了</p>
+		</li>
+		
+	</ul>
+</body>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+    <!-- 引入js资源 -->
+    <script type="text/javascript">
+		    var page=1;
+			var flag=true;
+			const roomId=getCookie('roomId')
+		$(document).ready(function () {
+		
+		$("#search").change(function(){
+		  var id=$(this).val();
+		  loaddata(roomId,page)
+		});
+		loaddata(roomId,page)
+		//body对象
+		var $body = $("body");
+		//body高度
+		var bh = $body.height();
+
+		//加载窗体滑动事件
+		$(window).scroll(function(){
+			//窗体高度
+			var wh = $(window).height();
+			//滚动条滚动长度
+			var sh = $(window).scrollTop();
+			//loaddata();
+			if(wh+sh>bh){
+			page++
+			  loaddata(roomId,page);
+			}
+			
+		})
+	});
+	function goIdMeter(idMeter,idHub){
+	      setCookie('idMeter',idMeter)
+	      setCookie('idHub',idHub)
+		  window.location.href="userPu-3.html" 
+	}
+	function loaddata(roomId,page){
+	   let html='';
+		$.ajax({
+			  url: '/sadr/company/getMeters.action'
+			 ,type:'post'
+			 ,data: {page:page,id:roomId, limit:10}
+			 ,success: function(data){
+			       const dataTab=data.data;
+				   if(dataTab.length>0 && flag){
+				       flag=true;
+					   for(var i=0;i<dataTab.length;i++){
+						   html +='<li><a href="#" onclick="goIdMeter('+dataTab[i].id+','+dataTab[i].idHub+')" class="commentUser"><div class="user-img"><img src="images/ts4.jpg"></div>';
+						   html +='<span>'+dataTab[i].name+'</span><span class="issue-time fr"></span> <b class="right"><i class="right-arrow1"></i><i class="right-arrow2"></i></b></a></li>';					  
+						}
+						 $('#content').append(html);
+					}else{
+					console.log(666666666)
+					 const noMore='<p>没有更多了</p>';
+					 flag=false;
+					 //$('#content').append(noMore);
+					}
+				}			
+			});
+	};
+	    //TAB切换
+	    var tab_Btns_box=document.getElementById('tab_btn');
+	    var tab_Btns=tab_Btns_box.getElementsByTagName('li');
+	    var tab_contents=document.getElementsByClassName('tab_content');
+	    for(var i=0;i<tab_Btns.length;i++){
+	    tab_Btns[i].index=i;
+
+	    tab_Btns[i].onclick=function(){
+	     for(var i=0;i<tab_Btns.length;i++){
+			 if(i!==this.index){
+				tab_Btns[i].classList.remove('pick')
+			 }
+	     }
+	     tab_Btns[this.index].className="pick";
+
+	     for(var j=0;j<tab_contents.length;j++){
+	     if(j!==this.index){
+	         tab_contents[j].classList.remove('show');
+	     }
+	         tab_contents[this.index].classList.add('show');
+	     }
+	    }
+	    }
+    </script>
+</html>

@@ -1,0 +1,100 @@
+
+<title>待审核用户列表</title>
+
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>待审核用户列表</cite></a>
+    </div>
+</div>
+
+<div class="layui-fluid" id="LAY-daily-table">
+
+    <div class="layui-card">
+        <div class="demoTable lay-mb15">
+            搜索ID：
+            <div class="layui-inline">
+                <input class="layui-input" name="id" id="dailyReload" autocomplete="off">
+            </div>
+            <button class="layui-btn" data-type="reload">搜索</button>
+        </div>
+        <table class="layui-hide" id="LAY-daily-electric" lay-filter="user" ></table>
+
+    </div>
+</div>
+<script type="text/html" id="checkboxTpl">
+  <!-- 这里的 checked 的状态只是演示 -->
+  <span> {{ d.role == 2 ? '安装人员' : '客户' }}</span>
+</script>
+<script type="text/html" id="barDemo">
+ <a class="layui-btn layui-btn-xs" lay-event="audio">审核</a>
+</script>
+<script>
+    layui.use(['table','layer'], function(){
+        var table = layui.table;
+		layer = layui.layer; //独立版的layer无需执行这一句
+        table.render({
+            elem: '#LAY-daily-electric'
+			,method:'post'
+            ,url: 'user/listreview.action'
+            ,cols: [[
+                {checkbox: true, fixed: true}
+                ,{field:'id', title: '工号', sort: true}
+                ,{field:'account', title: '用户名'}
+                ,{field:'role', title: '角色', templet: '#checkboxTpl'}     
+                ,{field:'password', title: '密码'}
+				 ,{field:'operation', title: '操作',templet:'#barDemo'}
+            ]]
+            ,id: 'testReload'
+            ,page: true
+        });
+				
+		  //监听行工具事件
+		  table.on('tool(user)', function(obj){
+			var data = obj.data;
+			if(obj.event === 'audio'){
+			     layer.confirm('审核通过之后用户将获得使用该系统的权限', function(index){
+				    $.ajax({
+						 url: 'user/review.action'
+						 ,type:"post"
+						 ,dataType: "JSON"
+						 ,contentType:'application/json;charset=UTF-8'//关键是要加上这行
+						 ,traditional:true//这使json格式的字符不会被转码
+						 ,data: JSON.stringify({id:data.id}),
+						 success: function(data){
+
+							 if(data.message==='success'){
+								obj.del();
+								layer.close(index);
+							 }
+							}
+						});
+					
+				  });
+
+			}
+		  });
+		
+        var $ = layui.$, active = {
+            reload: function(){
+                var dailyReload = $('#dailyReload');
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从 第 1 页开始
+                    }
+                    ,where: {  
+                        account: dailyReload.val() 
+                    }
+                });
+            }
+        };
+
+   
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+    });
+</script>
