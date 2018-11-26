@@ -1,5 +1,4 @@
-﻿package moonma.com.smartammeter;
-
+package moonma.com.smartammeter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
