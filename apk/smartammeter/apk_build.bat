@@ -1,5 +1,8 @@
 
 @echo  apk_build  
+c:/Python27/python apk_build_clean.py 
 
-C:/moon/gradle/gradle-4.4/bin/gradle assembleRelease
+c:/Python27/python apk_build.py
+
+
 @Pause
